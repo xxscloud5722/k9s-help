@@ -16,7 +16,7 @@ import (
 import metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 
 // RefreshProject 刷新工程.
-func (kube *Kube) RefreshProject() error {
+func (kube *Kube) RefreshProject(ignore bool) error {
 	namespaceItems := namespaces(kube)
 	if namespaceItems == nil {
 		return nil
@@ -25,52 +25,76 @@ func (kube *Kube) RefreshProject() error {
 		var script = Generate(kube.Path, item.ObjectMeta.Name)
 		err := writer(script, path.Join(kube.Output, item.ObjectMeta.Name, item.ObjectMeta.Name+".sh"), 0755)
 		if err != nil {
-			return err
+			if !ignore {
+				return err
+			}
 		}
 		err = deployment(kube, item.ObjectMeta.Name)
 		if err != nil {
-			return err
+			if !ignore {
+				return err
+			}
 		}
 		err = statefulSet(kube, item.ObjectMeta.Name)
 		if err != nil {
-			return err
+			if !ignore {
+				return err
+			}
 		}
 		err = daemonSet(kube, item.ObjectMeta.Name)
 		if err != nil {
-			return err
+			if !ignore {
+				return err
+			}
 		}
 		err = job(kube, item.ObjectMeta.Name)
 		if err != nil {
-			return err
+			if !ignore {
+				return err
+			}
 		}
 		err = cronJob(kube, item.ObjectMeta.Name)
 		if err != nil {
-			return err
+			if !ignore {
+				return err
+			}
 		}
 		err = service(kube, item.ObjectMeta.Name)
 		if err != nil {
-			return err
+			if !ignore {
+				return err
+			}
 		}
 		err = ingress(kube, item.ObjectMeta.Name)
 		if err != nil {
-			return err
+			if !ignore {
+				return err
+			}
 		}
 		err = configmap(kube, item.ObjectMeta.Name)
 		if err != nil {
-			return err
+			if !ignore {
+				return err
+			}
 		}
 		err = secret(kube, item.ObjectMeta.Name)
 		if err != nil {
-			return err
+			if !ignore {
+				return err
+			}
 		}
 		err = persistentVolumeClaim(kube, item.ObjectMeta.Name)
 		if err != nil {
-			return err
+			if !ignore {
+				return err
+			}
 		}
 	}
 	err := persistentVolume(kube)
 	if err != nil {
-		return err
+		if !ignore {
+			return err
+		}
 	}
 	return nil
 }

@@ -40,13 +40,18 @@ func main() {
 					return
 				}
 			}
+			ignore, err := cmd.Flags().GetBool("ignore")
+			if err != nil {
+				color.Red(err.Error())
+				return
+			}
 			color.Blue("[kube] Loading Config: " + kubeConfig)
 			k, err := kube.New(kubeConfig, "", output)
 			if err != nil {
 				color.Red("[kube] Execute fail: " + err.Error())
 				return
 			}
-			err = k.RefreshProject()
+			err = k.RefreshProject(ignore)
 			if err != nil {
 				color.Red("[kube] Execute fail: " + err.Error())
 				return
@@ -55,6 +60,7 @@ func main() {
 		},
 	}
 	rootCmd.PersistentFlags().String("kubeconfig", "", "Specify kubeconfig")
+	rootCmd.PersistentFlags().Bool("ignore", true, "Specify kubeconfig")
 	rootCmd.PersistentFlags().String("output", "", "Output Path")
 	rootCmd.CompletionOptions.HiddenDefaultCmd = true
 	err := rootCmd.Execute()
