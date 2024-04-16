@@ -15,7 +15,7 @@ KUBE_TYPE_EN_NAME=(Deployment StatefulSet DaemonSet Job CronJob Service Ingress 
 KUBE_TYPE_DIRECTORY=(./deployment ./statefulSet ./daemonSet ./job ./cronJob ./service ./ingress ./configmap ./secret)
 
 function apply() {
-  kubectl --kubeconfig="$GL_KUBE_CONF" apply -n "$GL_KUBN_NAMESPACE" -f "$1"
+  kubectl --kubeconfig="$GL_KUBE_CONF" apply -n "$GL_KUBE_NAMESPACE" -f "$1"
 }
 
 function print_directory() {
