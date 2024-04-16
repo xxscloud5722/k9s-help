@@ -31,6 +31,8 @@ go build -o ./dist/k9s_help src/main.go
 
 Please place the program in the global path and set up the environment variables.
 
+The panel machine has kubectl installed, enabling access to additional functionalities.
+
 ```bash
 # Default /root/.kube/conf
 
