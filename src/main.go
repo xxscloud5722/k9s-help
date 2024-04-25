@@ -60,7 +60,7 @@ func main() {
 		},
 	}
 	rootCmd.PersistentFlags().String("kubeconfig", "", "Specify kubeconfig")
-	rootCmd.PersistentFlags().Bool("ignore", true, "Specify kubeconfig")
+	rootCmd.PersistentFlags().Bool("ignore", true, "ignore some errors")
 	rootCmd.PersistentFlags().String("output", "", "Output Path")
 	rootCmd.CompletionOptions.HiddenDefaultCmd = true
 	err := rootCmd.Execute()
